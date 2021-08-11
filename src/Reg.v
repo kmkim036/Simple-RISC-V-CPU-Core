@@ -32,19 +32,19 @@ module RegFile_32x64bit(input wire i_read0,
             regs[24] <= 64'd0; regs[25] <= 64'd0; regs[26] <= 64'd0; regs[27] <= 64'd0;
             regs[28] <= 64'd0; regs[29] <= 64'd0; regs[30] <= 64'd0; regs[31] <= 64'd0;
         end
-        else if (i_write&(i_write_addr ! = 5'd0)) 
-            regs[i_write_addr]< = i_write_data;
+        else if (i_write & (i_write_addr ! = 5'd0)) 
+            regs[i_write_addr] <= i_write_data;
     
     always@(posedge i_clk)
         if (i_read0)
-            if ((i_read_addr0 == i_write_addr)&i_write)
+            if ((i_read_addr0 == i_write_addr) & i_write)
                 o_read_data0 <= i_write_data;
             else
                 o_read_data0 <= regs[i_read_addr0];
        
     always@(posedge i_clk)
         if (i_read1)
-            if ((i_read_addr1 == i_write_addr)&i_write)
+            if ((i_read_addr1 == i_write_addr) & i_write)
                 o_read_data1 <= i_write_data;
             else
                 o_read_data1 <= regs[i_read_addr1];

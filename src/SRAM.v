@@ -5,7 +5,7 @@
 module SRAM#(parameter INITIAL_FILE = "",
              parameter WIDTH = 32,
              parameter ADDR_WIDTH = 10)
-           (input wire [WIDTH-1:0] i_data,
+            (input wire [WIDTH-1:0] i_data,
              input wire [ADDR_WIDTH-1:0] i_addr,
              output reg [WIDTH-1:0] o_data,
              input wire i_cs,
@@ -16,12 +16,12 @@ module SRAM#(parameter INITIAL_FILE = "",
     reg [WIDTH-1:0] mem[0:DEPTH-1];
     
     always@(posedge i_clk)
-        if (i_cs&(~|i_we)) 
+        if (i_cs & (~|i_we)) 
             o_data <= #1 mem[i_addr];
         
     always@(posedge i_clk)
-        if (i_cs&(i_we))
-            mem[i_addr] <= #1 (~i_we&mem[i_addr])|(i_we&i_data);
+        if (i_cs & (i_we))
+            mem[i_addr] <= #1 (~i_we & mem[i_addr]) | (i_we & i_data);
     
     initial 
         begin

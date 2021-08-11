@@ -80,7 +80,7 @@ module TB();
     initial 
     begin
         clk = 0;
-        forever # (CLK_PERIOD/2)
+        forever # (CLK_PERIOD / 2)
             clk = ~clk;
     end
     
@@ -88,7 +88,7 @@ module TB();
     initial 
     begin
         $dumpfile("TB.vcd");
-        $dumpvars(0,TB);
+        $dumpvars(0, TB);
         #(SIMULATION_TIME)
         $dumpflush;
         $finish;
