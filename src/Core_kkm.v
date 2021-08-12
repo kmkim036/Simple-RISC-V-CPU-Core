@@ -124,7 +124,7 @@ module Core_kkm(output wire [63:0] o_pm_addr,
         ProgramCounter <= 64'd0;
     end
     
-    //IF stage
+    // IF stage
     always@(posedge i_clk)
     begin
         if (stall)
@@ -149,7 +149,7 @@ module Core_kkm(output wire [63:0] o_pm_addr,
         end
     end
     
-    //ID stage
+    // ID stage
     always@(posedge i_clk)
     begin
         if (stall)
@@ -164,7 +164,7 @@ module Core_kkm(output wire [63:0] o_pm_addr,
         end
         else
         begin
-            if (inst_IFIDp[6])       //SB
+            if (inst_IFIDp[6])       // SB
             begin
                 ALUOp_IDEXp  <= 2'b01;
                 ALUSrc_IDEXp <= 1'b0;
@@ -174,7 +174,7 @@ module Core_kkm(output wire [63:0] o_pm_addr,
                 RegWrite_IDEXp <= 1'b0;
                 MemtoReg_IDEXp <= 1'b0;
             end
-            else if (inst_IFIDp[5] & inst_IFIDp[4])    //R
+            else if (inst_IFIDp[5] & inst_IFIDp[4])    // R
             begin
                 ALUOp_IDEXp  <= 2'b10;
                 ALUSrc_IDEXp <= 1'b0;
@@ -184,7 +184,7 @@ module Core_kkm(output wire [63:0] o_pm_addr,
                 RegWrite_IDEXp <= 1'b1;
                 MemtoReg_IDEXp <= 1'b0;
             end
-            else if (~inst_IFIDp[5] & ~inst_IFIDp[4])  //ld
+            else if (~inst_IFIDp[5] & ~inst_IFIDp[4])  // ld
             begin
                 ALUOp_IDEXp  <= 2'b00;
                 ALUSrc_IDEXp <= 1'b1;
@@ -194,7 +194,7 @@ module Core_kkm(output wire [63:0] o_pm_addr,
                 RegWrite_IDEXp <= 1'b1;
                 MemtoReg_IDEXp <= 1'b1;
             end
-            else if (inst_IFIDp[4])  //addi
+            else if (inst_IFIDp[4])  // addi
             begin
                 ALUOp_IDEXp  <= 2'b00;
                 ALUSrc_IDEXp <= 1'b1;
@@ -204,7 +204,7 @@ module Core_kkm(output wire [63:0] o_pm_addr,
                 RegWrite_IDEXp <= 1'b1;
                 MemtoReg_IDEXp <= 1'b0;
             end
-            else    //S
+            else    // S
             begin
                 ALUOp_IDEXp  <= 2'b00;
                 ALUSrc_IDEXp <= 1'b1;
@@ -216,11 +216,11 @@ module Core_kkm(output wire [63:0] o_pm_addr,
             end
         end
         
-        if (inst_IFIDp[6])  //SB
+        if (inst_IFIDp[6])  // SB
             imm_IDEXp <= {{43{inst_IFIDp[31]}}, inst_IFIDp[7], inst_IFIDp[30:25], inst_IFIDp[11:8]};
-        else if (inst_IFIDp[5] & ~inst_IFIDp[4])  //S
+        else if (inst_IFIDp[5] & ~inst_IFIDp[4])  // S
             imm_IDEXp <= {{43{inst_IFIDp[31]}}, inst_IFIDp[30:25], inst_IFIDp[11:7]};
-        else    //I or R
+        else    // I or R
             imm_IDEXp <= {{43{inst_IFIDp[31]}}, inst_IFIDp[30:20]};
         
         if (ForwardC == 2'b00)
@@ -248,12 +248,12 @@ module Core_kkm(output wire [63:0] o_pm_addr,
     assign r_addr0 = inst_IFIDp[19:15];
     assign r_addr1 = inst_IFIDp[24:20];
     
-    //EX stage
+    // EX stage
     always@(posedge i_clk)
     begin
-        if (~ALUOp_IDEXp[1] & ~ALUOp_IDEXp[0])     //I S
+        if (~ALUOp_IDEXp[1] & ~ALUOp_IDEXp[0])     // I S
             operation = 4'b0010;
-        else if (ALUOp_IDEXp[0])                 //SB
+        else if (ALUOp_IDEXp[0])                 // SB
             operation = 4'b0110;
         else if (inst_IDEXp[30])
             operation = 4'b0110;
@@ -310,7 +310,7 @@ module Core_kkm(output wire [63:0] o_pm_addr,
         data2_EXMEMp      <= data2;
     end
             
-    //MEM stage
+    // MEM stage
     always@(posedge i_clk)
     begin
         ALUresult_MEMWBp  <= ALUresult_EXMEMp;

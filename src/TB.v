@@ -8,23 +8,23 @@ module TB();
     localparam PM_ADDR_WIDTH = 10;
     localparam DM_ADDR_WIDTH = 10;
     
-    //program memory bus signals
+    // program memory bus signals
     wire [63:0] pm_addr;
     wire [31:0] pm_read_data;
     wire pm_cs;
     
-    //data memory bus signals
+    // data memory bus signals
     wire [63:0] dm_addr;
     wire [63:0] dm_read_data;
     wire [63:0] dm_write_data;
     wire dm_rw;
     wire dm_cs;
     
-    //clock&reset
+    // clock&reset
     reg rst;
     reg clk;
     
-    //processor core
+    // processor core
     Core_kkm Core(
     .o_pm_addr (pm_addr),
     .o_pm_cs (pm_cs),
@@ -38,7 +38,7 @@ module TB();
     .i_rst (rst)
     );
     
-    //data memory
+    // data memory
     SRAM#(
     .WIDTH(64),
     .ADDR_WIDTH(DM_ADDR_WIDTH)
@@ -51,7 +51,7 @@ module TB();
     .i_clk (clk)
     );
     
-    //program memory
+    // program memory
     SRAM#(
     .INITIAL_FILE(INITIAL_FILE),
     .WIDTH(32),
@@ -65,7 +65,7 @@ module TB();
     .i_clk (clk)
     );
     
-    //clock&reset generator
+    // clock&reset generator
     /*
      initial 
      begin
@@ -84,7 +84,7 @@ module TB();
             clk = ~clk;
     end
     
-    //signal dump
+    // signal dump
     initial 
     begin
         $dumpfile("TB.vcd");
